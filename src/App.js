@@ -12,10 +12,10 @@ import NewSongs from "./components/NewSongs";
 function App() {
 
   // define backend url base------------------------------------
-  const url = "https://mern1207-group.herokuapp.com"
+  const url = "http://localhost:3000"
   // Defines STATES------------------------------------
   const [playlist, setPlaylist] = useState([])
-  const [selectedSong, setSelectedSong] = useState("")
+  const [favSongs, setFavSongs]=useState([])
   // CRUD ROUTES------------------------------------
   // GET - INDEX---
   const getSongs = () => {
@@ -40,10 +40,20 @@ function App() {
   
   const deleteSong = (song)=>{
     console.log("this is song",song)
-      axios.delete(url + '/songs/' + song._id)
+      axios.delete(url + '/songs/' + song.id)
       .then((res)=>{getSongs()})
     }
-
+    
+    const handleFavorites = (song) =>{
+      setFavSongs([...favSongs, song])
+    }
+    
+    const deleteFavSong = (song)=>{
+      let newFav = favSongs.slice()
+      const index = newFav.findIndex((s)=>s.id===song.id)
+      newFav.splice(index,1)
+      setFavSongs(newFav)
+    }
   return (
     <div className="App">
       <Titlebar />
@@ -53,9 +63,13 @@ function App() {
       <Playlist 
         playlist={playlist} //Pass Down playlist state into playlist comp
         deleteSong = {deleteSong}
-
+        handleFavorites={handleFavorites}
       />
-      <FavSong />
+      <hr/>
+      <FavSong 
+        favSongs={favSongs}
+        deleteFavSong={deleteFavSong}/>
+      <hr/>
       <NewSongs playlist={playlist} create={handleCreateSong} />
     </div>
   );

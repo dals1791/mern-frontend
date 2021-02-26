@@ -1,7 +1,7 @@
 import React from "react";
 
 const Playlist = (props) => {
-  const { playlist, deleteSong } = props;
+  const { playlist, deleteSong, handleFavorites } = props;
   const loaded = () => {
     return (
       <div key={Playlist._id}>
@@ -22,6 +22,7 @@ const Playlist = (props) => {
                 <p> {song.time}</p>
               </div>
               <button onClick={()=>{deleteSong(song)}}>X</button>
+              <button onClick={()=>{handleFavorites(song)}}>Heart</button>
             </article>
           );
         })}
