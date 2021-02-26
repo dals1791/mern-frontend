@@ -12,7 +12,7 @@ import NewSongs from "./components/NewSongs";
 function App() {
 
   // define backend url base------------------------------------
-  const url = "http://localhost:3000"
+  const url = "https://tunr-rails-api.herokuapp.com"
   // Defines STATES------------------------------------
   const [playlist, setPlaylist] = useState([])
   const [favSongs, setFavSongs]=useState([])
